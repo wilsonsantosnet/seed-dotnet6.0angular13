@@ -13,8 +13,8 @@
   </section>
   <section class="col-md-6">
     <div class='form-group'>
-      <label>{{ vm.infos | traduction:'sampleTypeId' }}</label>
-      <input type='text' class='form-control'  [(ngModel)]='vm.modelFilter.sampleTypeId' name='sampleTypeId' />
+      <label>{{ vm.infos | traduction:'sampleTypeId'}}</label>
+      <select class='form-control'  name='sampleTypeId' [(ngModel)]='vm.modelFilter.sampleTypeId' datasource [dataitem]="'SampleType'" [fieldFilterName]="'Name'"></select>
     </div>
   </section>
   <section class="col-md-6">

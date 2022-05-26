@@ -16,6 +16,7 @@ export class MainServiceResource extends ServiceBase {
   getInfosResources() {
     return {
             Sample: { label: 'Sample' },
+      SampleType: { label: 'SampleType' },
     };
   }
 

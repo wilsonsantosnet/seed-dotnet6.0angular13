@@ -44,7 +44,8 @@ namespace Seed.Gen
 
                 TableInfo = new UniqueListTableInfo
                 {
-                    new TableInfo().FromTable("Sample").MakeBack().MakeFront()
+                    new TableInfo().FromTable("Sample").MakeBack().MakeFront(),
+                    new TableInfo().FromTable("SampleType").MakeBack().MakeFront()
                 }
             };
         }

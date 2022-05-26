@@ -28,6 +28,12 @@ namespace Seed.Api
 			services.AddScoped<ISampleService, SampleService>();
 			services.AddScoped<ISampleRepository, SampleRepository>();
 
+			services.AddScoped<IValidatorSpecification<SampleType>,SampleTypeIsSuitableValidation>();
+			services.AddScoped<IWarningSpecification<SampleType>, SampleTypeIsSuitableWarning>();
+			services.AddScoped<ISampleTypeApplicationService, SampleTypeApplicationService>();
+			services.AddScoped<ISampleTypeService, SampleTypeService>();
+			services.AddScoped<ISampleTypeRepository, SampleTypeRepository>();
+
 
 
             RegisterOtherComponents(services);

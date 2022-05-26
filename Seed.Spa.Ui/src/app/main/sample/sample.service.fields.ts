@@ -41,7 +41,7 @@ export class SampleServiceFields extends ServiceBase {
       tags: { label: 'tags', type: 'string', isKey: false, list:false  ,  },
       datetime: { label: 'datetime', type: 'DateTime?', isKey: false, list:true  ,  },
       sampleId: { label: 'sampleId', type: 'int', isKey: true, list:false  ,  },
-      sampleTypeId: { label: 'sampleTypeId', type: 'int', isKey: false, list:true  ,  },
+      sampleTypeId: { label: 'sampleTypeId', type: 'int', isKey: false, list:true  , navigationProp:'SampleType' },
       age: { label: 'age', type: 'int?', isKey: false, list:true  ,  },
       category: { label: 'category', type: 'int?', isKey: false, list:true  ,  },
       ativo: { label: 'ativo', type: 'bool?', isKey: false, list:true  ,  },

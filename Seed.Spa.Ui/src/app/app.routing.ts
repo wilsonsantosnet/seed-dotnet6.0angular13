@@ -11,12 +11,15 @@ const APP_ROUTES_DEFAULT: Routes = [
 
 			{ path: 'sample',  canActivate: [AuthGuard], loadChildren: () => import('./main/sample/sample.module').then(m => m.SampleModule) },
 
+			{ path: 'sampletype',  canActivate: [AuthGuard], loadChildren: () => import('./main/sampletype/sampletype.module').then(m => m.SampleTypeModule) },
+
 
 
             ]
     },
 
       { path: 'sample/print/:id', canActivate: [AuthGuard], loadChildren: () => import('./main/sample/sample-print/sample-print.module').then(m => m.SamplePrintModule) },
+      { path: 'sampletype/print/:id', canActivate: [AuthGuard], loadChildren: () => import('./main/sampletype/sampletype-print/sampletype-print.module').then(m => m.SampleTypePrintModule) },
 
 ]
 

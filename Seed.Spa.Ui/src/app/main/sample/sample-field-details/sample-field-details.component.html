@@ -20,7 +20,7 @@
  
 
     <dt>{{ vm.infos | traduction: 'sampleTypeId' }}:</dt>
-    <dd><bind-custom [model]="vm.details.sampleTypeId" [format]="'int'" [tag]="'span'" ></bind-custom></dd>
+    <dd><bind-custom [model]="vm.details.sampleTypeId" [format]="'instance'" [tag]="'span'"  [instance]="'SampleType'"  [key]="'SampleTypeId'"></bind-custom></dd>
  
 
     <dt>{{ vm.infos | traduction: 'age' }}:</dt>

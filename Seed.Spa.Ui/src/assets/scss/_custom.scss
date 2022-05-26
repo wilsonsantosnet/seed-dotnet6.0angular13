@@ -17,6 +17,10 @@
   width: 100% !important;
 }
 
+.select2-container--open {
+  z-index:99999;
+}
+
 select.ng-invalid + .select2-container .select2-selection {
   border: 1px solid #e2775a !important;
 }

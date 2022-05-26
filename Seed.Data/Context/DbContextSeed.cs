@@ -18,6 +18,7 @@ namespace Seed.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new SampleMap(modelBuilder.Entity<Sample>());
+            new SampleTypeMap(modelBuilder.Entity<SampleType>());
 
         }
 

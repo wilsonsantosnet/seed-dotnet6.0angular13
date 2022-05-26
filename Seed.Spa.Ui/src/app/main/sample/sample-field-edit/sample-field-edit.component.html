@@ -27,11 +27,12 @@
     </div>
   </section>
 
-  <section class="col-md-12"  >
+  <section class="col-md-12"   *ngIf="!vm.isParent || vm.ParentIdField != 'sampleTypeId'">
     <div class='form-group'>
-      <label>{{ vm.infos | traduction:'sampleTypeId' }}</label>
-      <input type='text' class='form-control' [(ngModel)]='vm.model.sampleTypeId' name='sampleTypeId' required formControlName='sampleTypeId'  maski='9999999999'  autocomplete='off'/>
-    </div>
+      <label class='mr-1'>{{ vm.infos | traduction:'sampleTypeId' }}</label> 
+        <select class='form-control'  name='sampleTypeId' [(ngModel)]='vm.model.sampleTypeId' required formControlName='sampleTypeId' datasource [dataitem]="'SampleType'" [fieldFilterName]="'Name'"  ></select>
+      </div>
+        
   </section>
 
   <section class="col-md-12"  >

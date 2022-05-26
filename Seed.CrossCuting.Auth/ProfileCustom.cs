@@ -52,6 +52,7 @@ namespace Seed.CrossCuting
             var tools = new List<dynamic>
             {
                 new Tool { Icon = "fa fa-edit", Name = "Sample", Route = "/sample", Key = "Sample" , Type = ETypeTools.Menu },
+                new Tool { Icon = "fa fa-edit", Name = "SampleType", Route = "/sampletype", Key = "SampleType" , Type = ETypeTools.Menu },
 
             };
             var _toolsForAdmin = System.Text.Json.JsonSerializer.Serialize(tools);
@@ -67,6 +68,7 @@ namespace Seed.CrossCuting
             var tools = new List<Tool>
             {
                 new Tool { Icon = "fa fa-edit", Name = "Sample", Route = "/sample", Key = "Sample" , Type = ETypeTools.Menu },
+                new Tool { Icon = "fa fa-edit", Name = "SampleType", Route = "/sampletype", Key = "SampleType" , Type = ETypeTools.Menu },
 
             };
 
@@ -83,6 +85,7 @@ namespace Seed.CrossCuting
             var tools = new List<Tool>
             {
                 new Tool { Icon = "fa fa-edit", Name = "Sample", Route = "/sample", Key = "Sample" , Type = ETypeTools.Menu },
+                new Tool { Icon = "fa fa-edit", Name = "SampleType", Route = "/sampletype", Key = "SampleType" , Type = ETypeTools.Menu },
 
             };
 
