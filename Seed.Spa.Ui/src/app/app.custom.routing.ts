@@ -6,10 +6,10 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const APP_ROUTES_CUSTOM: Routes = [
 
-	{ path: 'home', component: MainComponent },
-	{ path: 'login', component: LoginComponent },
+  { path: 'home', component: MainComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'unauthorized', component: UnauthorizedComponent }
 
 ]
 
-export const RoutingCustom: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES_CUSTOM);
+export const RoutingCustom: ModuleWithProviders<any> = RouterModule.forRoot(APP_ROUTES_CUSTOM);

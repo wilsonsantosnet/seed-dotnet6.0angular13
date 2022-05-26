@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, Input, OnInit, HostListener } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 declare var $: any;
@@ -16,7 +16,7 @@ export class MaskMoneyDirective implements ControlValueAccessor, OnInit {
   onTouched: any;
   onChange: any;
 
-  constructor(private _elemetRef: ElementRef, private _renderer: Renderer) {
+  constructor(private _elemetRef: ElementRef) {
 
   }
 

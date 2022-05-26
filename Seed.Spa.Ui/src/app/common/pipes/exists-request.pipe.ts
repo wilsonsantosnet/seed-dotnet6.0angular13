@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { retry } from 'rxjs/operators';
-import { fail } from 'assert';
 
 @Pipe({
   name: 'existsRequest',
@@ -17,7 +15,7 @@ export class ExistsRequestPipe implements PipeTransform {
     if (model) {
       return this.api.enableLoading(false).setResource(dataItem)
         .get({ id: model })
-        .toPromise<boolean>()
+        .toPromise()
         .then(((response: any) => {
           return response.data ? true : false;
         }));

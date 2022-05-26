@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+//import { Http, Response } from '@angular/http';
+import { HttpClient} from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
@@ -8,7 +9,7 @@ import { environment } from '../environments/environment';
 export class StartupService {
 
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   load(): Promise<any> {
 
@@ -19,7 +20,7 @@ export class StartupService {
       this.http.get(jsonFileURL)
         .toPromise()
         .then((data: any) => {
-          data = data.json();
+          data = data;
           return resolve(GlobalService.setAppsettings(data));
         })
         .catch((err: any) => {

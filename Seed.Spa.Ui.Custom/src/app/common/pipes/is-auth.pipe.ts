@@ -1,6 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { retry } from 'rxjs/operators';
-import { fail } from 'assert';
 import { AuthService } from '../services/auth.service';
 
 @Pipe({

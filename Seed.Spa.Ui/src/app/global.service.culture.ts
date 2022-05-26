@@ -5,7 +5,8 @@ import { CacheService } from './common/services/cache.service';
 import { ECacheType } from './common/type-cache.enum';
 import { GlobalService } from './global.service';
 import { ApiService } from './common/services/api.service';
-import { Http } from '@angular/http';
+//import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 export class Translated {
 
@@ -65,7 +66,7 @@ export class GlobalServiceCulture extends ServiceBase {
 
   private _cacheType: ECacheType;
 
-  constructor(private api: ApiService<any>, private http: Http) {
+  constructor(private api: ApiService<any>, private http: HttpClient) {
     super();
     this._cacheType = GlobalService.getGlobalSettings().CACHE_TYPE;
   }

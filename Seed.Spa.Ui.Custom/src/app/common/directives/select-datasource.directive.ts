@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, Input, Output, OnInit, OnChanges, EventEmitter, OnDestroy, Optional, Self } from '@angular/core';
+import { Directive, ElementRef,Input, Output, OnInit, OnChanges, EventEmitter, OnDestroy, Optional, Self } from '@angular/core';
 import { NgModel, FormControlName } from '@angular/forms';
 
 import { ApiService } from '../services/api.service';
@@ -29,7 +29,7 @@ export class DataSourceDirective implements OnInit, OnDestroy {
 
   _notificationEmitter: Subscription;
 
-  constructor(private _elemetRef: ElementRef, private _renderer: Renderer, private api: ApiService<any>, private ngModel: NgModel, @Optional() @Self() private controlName: FormControlName) {
+  constructor(private _elemetRef: ElementRef, private api: ApiService<any>, private ngModel: NgModel, @Optional() @Self() private controlName: FormControlName) {
 
     this.disabledOnInit = false;
     this.enabledSelect2 = GlobalService.getGlobalSettings().enabledSelect2;

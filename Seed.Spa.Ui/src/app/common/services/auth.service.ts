@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationCancel } from '@angular/router';
-import { URLSearchParams, } from '@angular/http';
+//import { URLSearchParams, } from '@angular/http';
 
 import { ApiService } from '../services/api.service';
 import { ECacheType } from '../type-cache.enum';
@@ -87,6 +87,7 @@ export class AuthService {
 
       console.log("<<<<< LOGINRESOURCEOWNER TOKEN >>>>>>", result.data);
       CacheService.add(this._nameToken, result.data.accessToken, this._cacheType);
+
       this.router.navigate(["/home"]);
 
       if (reload)
@@ -252,10 +253,10 @@ export class AuthService {
     console.log("<<<<<<< _acceptlogin >>>>>>>>>>", token)
     CacheService.add(this._nameToken, token, this._cacheType);
 
-    this.router.navigate(["/home"]);
+    //this.router.navigate(["/home"]);
 
-    if (reload)
-      window.location.reload();
+  //  if (reload)
+  //    window.location.reload();
   }
 
   reset() {

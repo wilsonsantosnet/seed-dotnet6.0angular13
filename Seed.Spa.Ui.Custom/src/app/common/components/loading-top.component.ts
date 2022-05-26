@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 
     .loader img {
       width: 160px;
-      heigth: 30px;
+      height: 30px;
       margin: 10px;
      }
   `]

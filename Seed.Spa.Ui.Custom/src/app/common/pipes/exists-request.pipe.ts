@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { retry } from 'rxjs/operators';
-import { fail } from 'assert';
+
 
 @Pipe({
   name: 'existsRequest',

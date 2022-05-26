@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, Input, Output, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Input, Output, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 import { ApiService } from '../services/api.service';
@@ -17,7 +17,7 @@ export class DomElemetAppendDirective implements OnInit, OnDestroy {
     @Input() dataitem: any[];
     _notificationEmitter: Subscription;
 
-    constructor(private _elemetRef: ElementRef, private _renderer: Renderer, private api: ApiService<any>, private ngModel: NgModel) {
+    constructor(private _elemetRef: ElementRef,  private api: ApiService<any>, private ngModel: NgModel) {
 
     }
 

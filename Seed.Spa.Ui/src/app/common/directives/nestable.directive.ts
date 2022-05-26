@@ -1,6 +1,5 @@
 import { Directive, ElementRef, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { Http, RequestOptions } from '@angular/http';
 
 declare var $: any;
 
@@ -17,7 +16,7 @@ export class NestableDirective implements OnInit, OnChanges {
 
   private initilialized: boolean;
 
-  constructor(private el: ElementRef, private ngModel: NgModel, public http: Http) {
+  constructor(private el: ElementRef, private ngModel: NgModel) {
     this.initilialized = false;
   }
 

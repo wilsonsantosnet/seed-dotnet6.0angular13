@@ -1,4 +1,4 @@
-﻿import { Directive, ElementRef, Renderer, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Directive, ElementRef,Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 import { ApiService } from '../services/api.service';
@@ -16,7 +16,7 @@ export class DataSourceShowDirective implements OnInit {
     @Input() endpoint: string;
     @Input() datafilters: any;
 
-    constructor(private _elemetRef: ElementRef, private _renderer: Renderer, private api: ApiService<any>, private ngModel: NgModel) {
+    constructor(private _elemetRef: ElementRef, private api: ApiService<any>, private ngModel: NgModel) {
 
        
     }
