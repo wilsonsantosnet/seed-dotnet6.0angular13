@@ -133,11 +133,19 @@ namespace IdentityServer4.Quickstart.UI
                     };
 
                     // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(user.SubjectId, user.Username, props, user.Claims.ToArray());
+                    //await HttpContext.SignInAsync(user.SubjectId, user.Username, props, user.Claims.ToArray());
+                    var serverUser = new IdentityServerUser(user.SubjectId)
+                    {
+                        DisplayName = user.Username,
+                        AdditionalClaims = user.Claims.ToArray(),
+                    };
+                    serverUser.CreatePrincipal();
+
+                    await HttpContext.SignInAsync(serverUser);
 
                     if (context != null)
                     {
-                        if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                        if (await _clientStore.IsPkceClientAsync(context.Client.ClientId))
                         {
                             // if the client is PKCE then we assume it's native, so this change in how to
                             // return the response is for better UX for the end user.
@@ -253,9 +261,9 @@ namespace IdentityServer4.Quickstart.UI
                 }).ToList();
 
             var allowLocal = true;
-            if (context?.ClientId != null)
+            if (context?.Client.ClientId != null)
             {
-                var client = await _clientStore.FindEnabledClientByIdAsync(context.ClientId);
+                var client = await _clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
                 if (client != null)
                 {
                     allowLocal = client.EnableLocalLogin;

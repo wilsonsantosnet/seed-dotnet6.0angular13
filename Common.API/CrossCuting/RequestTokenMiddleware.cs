@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -65,15 +66,7 @@ namespace Common.API.Extensions
             return claims;
         }
 
-        private static async Task<IEnumerable<Claim>> GetClaimsFromServer(IOptions<ConfigSettingsBase> configSettingsBase, string tokenClear)
-        {
-            var discoveryClient = new DiscoveryClient(configSettingsBase.Value.AuthorityEndPoint);
-            var doc = await discoveryClient.GetAsync();
-            var userInfoClient = new UserInfoClient(doc.UserInfoEndpoint);
-            var response = await userInfoClient.GetAsync(tokenClear);
-            var claims = response.Claims;
-            return claims;
-        }
+       
     }
 
     public static class RequestTokenMiddlewareExtension

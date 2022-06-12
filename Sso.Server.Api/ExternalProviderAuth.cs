@@ -67,7 +67,13 @@ namespace Sso.Server.Api
             AuthenticationProperties props = null;
             // issue authentication cookie for user
             await _events.RaiseAsync(new UserLoginSuccessEvent(provider, userId, user.SubjectId, user.Username));
-            await this._htc.HttpContext.SignInAsync(user.SubjectId, user.Username, provider, props, user.Claims.ToArray());
+            //await this._htc.HttpContext.SignInAsync(user.SubjectId, user.Username, provider, props, user.Claims.ToArray());
+            await this._htc.HttpContext.SignInAsync(new IdentityServer4.IdentityServerUser(user.SubjectId)
+            {
+                DisplayName = user.Username,
+                AdditionalClaims = user.Claims.ToArray()
+
+            });
 
             // delete temporary cookie used during external authentication
             await this._htc.HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
@@ -102,10 +108,10 @@ namespace Sso.Server.Api
                     // add the groups as claims -- be careful if the number of groups is too large
                     if (AccountOptions.IncludeWindowsGroups)
                     {
-                        var wi = wp.Identity as WindowsIdentity;
-                        var groups = wi.Groups.Translate(typeof(NTAccount));
-                        var roles = groups.Select(x => new Claim(JwtClaimTypes.Role, x.Value));
-                        id.AddClaims(roles);
+                        //var wi = wp.Identity as WindowsIdentity;
+                        //var groups = wi.Groups.Translate(typeof(NTAccount));
+                        //var roles = groups.Select(x => new Claim(JwtClaimTypes.Role, x.Value));
+                        //id.AddClaims(roles);
                     }
 
                     await this._htc.HttpContext.SignInAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme, new ClaimsPrincipal(id), props);

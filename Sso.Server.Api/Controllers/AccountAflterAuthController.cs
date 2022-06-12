@@ -36,7 +36,17 @@ namespace Sso.Server.Api.Controllers
 
             this.AddClaims(claims_type, claims_value, userClaims);
             await _events.RaiseAsync(new UserLoginSuccessEvent(userName, subjectId, userName));
-            await HttpContext.SignInAsync(subjectId, userName, userClaims.ToArray());
+            
+            //await HttpContext.SignInAsync(subjectId, userName, userClaims.ToArray());
+
+            await HttpContext.SignInAsync(new IdentityServer4.IdentityServerUser(subjectId)
+            {
+                DisplayName = userName,
+                AdditionalClaims = userClaims.ToArray()
+
+            });
+
+
 
             var url = string.Format("/connect/authorize/login?client_id={0}&redirect_uri={1}&response_type={2}&scope={3}&state={4}", client_id, redirect_uri, response_type, scope, state);
             return Redirect(url);

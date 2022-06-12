@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sso.Server.Api.Model;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Sso.Server.Api.Controllers
@@ -38,8 +39,20 @@ namespace Sso.Server.Api.Controllers
             if (identityEndPoint.IsNull())
                 throw new InvalidOperationException("Endpoint invalid");
 
-            var tokenClient = new TokenClient(identityEndPoint + "/connect/token", accountCredential.ClientId, accountCredential.ClientSecret);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("ssosa");
+            //var tokenClient = new TokenClient(identityEndPoint + "/connect/token", accountCredential.ClientId, accountCredential.ClientSecret);
+            //var tokenResponse = await tokenClient.RequestClientCredentialsAsync("ssosa");
+
+            var _client = new HttpClient
+            {
+                BaseAddress = new Uri(identityEndPoint + "/connect/token")
+            };
+            var tokenResponse = _client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                ClientId = accountCredential.ClientId,
+                ClientSecret = accountCredential.ClientSecret,
+                Scope = "ssosa"
+            }).Result;
+
 
             if (tokenResponse.IsError)
                 return result.ReturnCustomException(new Exception(tokenResponse.Error), "Sso.Server.Api - Account");

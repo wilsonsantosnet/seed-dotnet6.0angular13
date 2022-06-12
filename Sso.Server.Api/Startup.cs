@@ -50,6 +50,7 @@ namespace Sso.Server.Api
                 .AddCustomTokenRequestValidator<ClientCredentialRequestValidator>()
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryClients(Config.GetClients(Configuration.GetSection("ConfigSettings").Get<ConfigSettingsBase>()));
 
             //Configurations

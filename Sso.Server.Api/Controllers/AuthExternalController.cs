@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Sso.Server.Api.Controllers
@@ -49,9 +50,20 @@ namespace Sso.Server.Api.Controllers
                 throw new InvalidOperationException("Endpoint invalid");
 
 
-            var disco = await DiscoveryClient.GetAsync(identityEndPoint);
-            var tokenClient = new TokenClient(disco.TokenEndpoint, appClientId, appClientSecret);
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(appScope);
+            //var disco = await DiscoveryClient.GetAsync(identityEndPoint);
+            //var tokenClient = new TokenClient(disco.TokenEndpoint, appClientId, appClientSecret);
+            //var tokenResponse = await tokenClient.RequestClientCredentialsAsync(appScope);
+
+            var _client = new HttpClient
+            {
+                BaseAddress = new Uri(identityEndPoint)
+            };
+            var tokenResponse = _client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                ClientId = "hangfire-api",
+                ClientSecret = "segredo",
+                Scope = "ssosa"
+            }).Result;
 
             if (!tokenResponse.IsError)
             {
@@ -64,7 +76,13 @@ namespace Sso.Server.Api.Controllers
                     if (userLoged.Error.IsNullOrEmpty())
                     {
                         await _events.RaiseAsync(new UserLoginSuccessEvent(user, userLoged.SubjectId, user));
-                        await HttpContext.SignInAsync(userLoged.SubjectId, user, userLoged.Claims.ToArray());
+                        //await HttpContext.SignInAsync(userLoged.SubjectId, user, userLoged.Claims.ToArray());
+                        await HttpContext.SignInAsync(new IdentityServer4.IdentityServerUser(userLoged.SubjectId)
+                        {
+                            DisplayName = user,
+                            AdditionalClaims = userLoged.Claims.ToArray()
+
+                        });
 
                         var url = string.Format("/connect/authorize/callback?client_id={0}&redirect_uri={1}&response_type={2}&scope={3}&state={4}&nonce={5}", userClientId, redirectUri, responseType, scopeEndoded, state, nonce);
                         return Redirect(url);

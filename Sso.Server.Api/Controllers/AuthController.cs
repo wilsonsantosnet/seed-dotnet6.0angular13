@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Common.Domain.Base;
 using Common.Domain;
+using System.Net.Http;
 
 namespace Sso.Server.Api.Controllers
 {
@@ -21,10 +22,10 @@ namespace Sso.Server.Api.Controllers
             this._logger = logger.CreateLogger<AuthController>();
             this._configSettingsBase = configSettingsBase;
             this._logger.LogInformation("AccountController init success");
-        }        
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]AccountCredential accountCredencial)
+        public async Task<IActionResult> Post([FromBody] AccountCredential accountCredencial)
         {
             var result = new HttpResult<TokenResponse>(this._logger);
 
@@ -32,15 +33,28 @@ namespace Sso.Server.Api.Controllers
             if (identityEndPoint.IsNull())
                 throw new InvalidOperationException("Endpoint invalid");
 
-            var tokenClient = new TokenClient(identityEndPoint + "/connect/token", accountCredencial.ClientId, accountCredencial.ClientSecret);
-            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(accountCredencial.User, accountCredencial.Password, accountCredencial.Scope);
+            //var tokenClient = new TokenClient(identityEndPoint + "/connect/token", accountCredencial.ClientId, accountCredencial.ClientSecret);
+            //var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync(accountCredencial.User, accountCredencial.Password, accountCredencial.Scope);
+
+            var _client = new HttpClient
+            {
+                BaseAddress = new Uri(identityEndPoint + "/connect/token")
+            };
+            var tokenResponse = _client.RequestPasswordTokenAsync(new PasswordTokenRequest
+            {
+                UserName = accountCredencial.User,
+                Password = accountCredencial.Password,
+                Scope = accountCredencial.Scope
+
+            }).Result;
+
 
             if (tokenResponse.IsError)
                 return result.ReturnCustomException(new Exception(tokenResponse.Error), "Sso.Server.Api - Account");
 
             return result.ReturnCustomResponse(tokenResponse);
         }
-        
+
 
     }
 }
