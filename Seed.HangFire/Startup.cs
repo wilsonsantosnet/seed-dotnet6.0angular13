@@ -96,7 +96,6 @@ namespace Seed.HangFire
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHangfireServer();
             app.UseAuthentication();
             app.UseHangfireDashboard("/jobs", new DashboardOptions
             {
