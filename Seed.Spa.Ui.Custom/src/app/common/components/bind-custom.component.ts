@@ -58,17 +58,20 @@ export class BindCustomComponent implements OnInit, OnChanges {
     else if (this.format.toLocaleLowerCase() === 'datetime' || this.format.toLocaleLowerCase() === 'datetime?') {
       this.value = this.datePipe.transform(this.convertDate(this.model), 'dd/MM/yyyy HH:mm');
     }
-    else if ((this.format.toLocaleLowerCase() === 'integer' || this.format.toLocaleLowerCase() === 'int' || this.format.toLocaleLowerCase() === 'int?') && !isNaN(this.model)) {
-      this.value = this.decimalPipe.transform(this.model, '1.0-0');
+    else if (this.format.toLocaleLowerCase() === 'yearmonth' || this.format.toLocaleLowerCase() === 'yearmonth?') {
+      this.value = this.datePipe.transform(this.convertDate(this.model), 'MM/yyyy');
     }
-    else if ((this.format.toLocaleLowerCase() === 'decimal' || this.format.toLocaleLowerCase() === 'decimal?' ) && !isNaN(this.model)) {
-      this.value = this.decimalPipe.transform(this.model, '1.2-2');
+    else if ((this.format.toLocaleLowerCase() === 'integer' || this.format.toLocaleLowerCase() === 'int' || this.format.toLocaleLowerCase() === 'int?') && !isNaN(this.convertNumber(this.model))) {
+      this.value = this.decimalPipe.transform(this.convertNumber(this.model), '1.0-0');
     }
-    else if (this.format.toLocaleLowerCase() === 'percent' && !isNaN(this.model)) {
-      this.value = this.percentPipe.transform(this.model, '1.2-2');
+    else if ((this.format.toLocaleLowerCase() === 'decimal' || this.format.toLocaleLowerCase() === 'decimal?') && !isNaN(this.convertNumber(this.model))) {
+      this.value = this.decimalPipe.transform(this.convertNumber(this.model), '1.2-2');
     }
-    else if (this.format.toLocaleLowerCase() === 'currency' && !isNaN(this.model)) {
-      this.value = this.currencyPipe.transform(this.model, 'BRL', true, '1.2-2');
+    else if (this.format.toLocaleLowerCase() === 'percent' && !isNaN(this.convertNumber(this.model))) {
+      this.value = this.percentPipe.transform(this.convertNumber(this.model), '1.2-2');
+    }
+    else if (this.format.toLocaleLowerCase() === 'currency' && !isNaN(this.convertNumber(this.model))) {
+      this.value = this.currencyPipe.transform(this.convertNumber(this.model), 'BRL', true, '1.2-2');
     }
     else if (this.format.toLocaleLowerCase() === 'instance') {
       this._getInstance();
@@ -114,13 +117,19 @@ export class BindCustomComponent implements OnInit, OnChanges {
 
   }
 
-
-  public convertDate(value: any) {
+  public convertNumber(value: any) {
     if (value) {
-      var datePart = value.toString().split("/");
-      var convertedDate = datePart[1] + "/" + datePart[0] + "/" + datePart[2];
-      return new Date(convertedDate);
+      var number = value.toString().replace(".", "").replace(",", ".");
+      return number;
     }
+  }
+  public convertDate(value: any) {
+    //if (value) {
+    //    var datePart = value.toString().split("/");
+    //    var convertedDate = datePart[1] + "/" + datePart[0] + "/" + datePart[2];
+    //    return new Date(convertedDate);
+    //}
+    return value;
   }
 
   private _getInDataItem(model: any, dataitem: any) {

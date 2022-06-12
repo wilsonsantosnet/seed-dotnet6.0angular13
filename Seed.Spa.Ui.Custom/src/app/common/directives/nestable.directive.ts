@@ -1,6 +1,5 @@
 import { Directive, ElementRef, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { Http, RequestOptions } from '@angular/http';
 
 declare var $: any;
 
@@ -17,12 +16,12 @@ export class NestableDirective implements OnInit, OnChanges {
 
   private initilialized: boolean;
 
-  constructor(private el: ElementRef, private ngModel: NgModel, public http: Http) {
+  constructor(private el: ElementRef, private ngModel: NgModel) {
     this.initilialized = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.init();
+    this.init();
   }
 
   ngOnInit() {
@@ -40,7 +39,14 @@ export class NestableDirective implements OnInit, OnChanges {
         group: 1
       }).on('change', (e) => {
         var element = e.length ? e : $(e.target);
-        this.change.emit(element.nestable('serialize'));
+        var e = element.nestable('serialize');
+        var result = e.map((item) => {
+          return {
+            id: item.id,
+            aditional: JSON.parse(unescape(item.aditional))
+          }
+        })
+        this.change.emit(result);
       });
     }
     this.initilialized = true;
@@ -49,7 +55,7 @@ export class NestableDirective implements OnInit, OnChanges {
   buildItem(item) {
 
 
-    let html = "<li class='dd-item' data-id='" + item.id + "' data-aditional='" + JSON.stringify(item.dataAditional) + "'>";
+  let html = "<li class='dd-item' data-id='" + item.id + "' data-aditional='" + escape(JSON.stringify(item.dataAditional)) + "'>";
     html += "<div class='dd-handle'>" + item.name + "</div>";
 
 

@@ -1,4 +1,4 @@
-import { Directive, ElementRef,Input, OnInit, HostListener } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 declare var $: any;

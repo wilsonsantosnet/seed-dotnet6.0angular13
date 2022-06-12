@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -76,6 +77,7 @@ export function startupServiceFactory(startupService: StartupService): Function 
     HttpModule,
     RoutingDefault,
     RoutingCustom,
+    HttpClientModule,
     AppAsideModule,
     AppFooterModule,
     AppHeaderModule,

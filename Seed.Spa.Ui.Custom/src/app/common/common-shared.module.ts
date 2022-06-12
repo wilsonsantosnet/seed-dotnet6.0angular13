@@ -16,6 +16,8 @@ import { DateDirective } from './directives/date.directive';
 import { DateTimeDirective } from './directives/date.time.directive';
 import { BindCustomComponent } from './components/bind-custom.component';
 import { MakeGridComponent } from './components/grid.component'
+import { GridFilterComponent } from './components/grid-filter.component'
+
 import { CepComponent } from '../common/components/cep.component';
 import { TreeViewComponent } from '../common/components/tree-view.component';
 import { NestabaleTreeComponent } from '../common/components/nestable-tree.component';
@@ -45,7 +47,7 @@ import { ListValueComponent } from './components/list-value.component';
 import { ListSimpleComponent } from './components/list-simple.component';
 import { ListFilteredComponent } from './components/list-filtered.component';
 import { NavigationPropertyPipe } from './pipes/navigation-property.pipe';
-
+import { MakeGridOrderComponent } from './components/grid-order.component';
 
 
 @NgModule({
@@ -74,6 +76,7 @@ import { NavigationPropertyPipe } from './pipes/navigation-property.pipe';
     EditorHtmlDiretive,
     DomElemetAppendDirective,
     MakeGridComponent,
+    GridFilterComponent,
     CepComponent,
     TreeViewComponent,
     NestabaleTreeComponent,
@@ -96,6 +99,7 @@ import { NavigationPropertyPipe } from './pipes/navigation-property.pipe';
     ListSimpleComponent,
     ListFilteredComponent,
     NavigationPropertyPipe,
+    MakeGridOrderComponent
   ],
   providers: [
   ],
@@ -104,6 +108,7 @@ import { NavigationPropertyPipe } from './pipes/navigation-property.pipe';
     MakePaginationComponent,
     CpfCnpjComponent,
     MakeGridComponent,
+    GridFilterComponent,
     CepComponent,
     CepDirective,
     TreeViewComponent,
@@ -138,7 +143,8 @@ import { NavigationPropertyPipe } from './pipes/navigation-property.pipe';
     ExistsRequestPipe,
     ContainsPipe,
     TraductionPipe,
-    isAuthPipe
+    isAuthPipe,
+    MakeGridOrderComponent
   ]
 })
 export class CommonSharedModule {

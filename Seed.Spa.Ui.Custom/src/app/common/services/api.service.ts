@@ -1,13 +1,12 @@
-import { throwError as observableThrowError, Observable, Observer } from 'rxjs';
-import { finalize, map, filter, catchError, mergeMap, retry } from 'rxjs/operators';
-import { Http, RequestOptions, Response, Headers, URLSearchParams, ResponseContentType } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Inject, Injectable, OnInit } from '@angular/core';
-import { QueryEncoder } from '@angular/http';
-import { ECacheType } from '../type-cache.enum';
+import { NotificationsService } from 'angular2-notifications';
+import { Observable, throwError } from 'rxjs';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { GlobalService, OperationRequest } from '../../global.service';
 import { CacheService } from '../services/cache.service';
-import { NotificationsService } from 'angular2-notifications';
+import { ECacheType } from '../type-cache.enum';
 
 
 @Injectable()
@@ -23,7 +22,7 @@ export class ApiService<T> {
   private _tokenAuthAnonymous: string;
 
 
-  constructor(private http: Http, private notificationsService: NotificationsService, private router: Router) {
+  constructor(private http: HttpClient, private notificationsService: NotificationsService, private router: Router) {
 
     this._apiDefault = GlobalService.getEndPoints().DEFAULT
     this._enableNotifification = true;
@@ -44,7 +43,8 @@ export class ApiService<T> {
     let _count = 0;
 
     this.loading(this.getResource(), true, _count);
-    return this.processResponse(this.http.post(_url, formData, this.requestOptions(false)), _count, true, true);
+    var post = this.http.post<T>(_url, formData, this.requestOptions(false));
+    return this.processResponse(post, _count, true, true);
 
   }
 
@@ -101,11 +101,7 @@ export class ApiService<T> {
       url += '/' + data.id;
     }
     this.loading(this.getResource(), true, _count);
-
-    var ro = this.requestOptions().merge(new RequestOptions({
-      search: this.makeSearchParams(data)
-    }));
-
+    var ro = Object.assign(this.requestOptions(),(this.makeSearchParams(data)));
     return this.processResponse(this.http.delete(url, ro), _count, true, true);
   }
 
@@ -130,7 +126,7 @@ export class ApiService<T> {
     let _count = 0;
     this.loading(this.getResource(), true, _count);
 
-    return this.processResponse(this.http.get(url, this.requestOptionsBlob().merge(new RequestOptions({ search: this.makeSearchParams(filters) }))), _count, true, false);
+    return this.processResponse(this.http.get(url, Object.assign(this.requestOptionsBlob(),({ params: this.makeSearchParams(filters) }))), _count, true, false);
   }
 
   public getDataitem(filters?: any): Observable<any> {
@@ -166,7 +162,8 @@ export class ApiService<T> {
     var url = this._enabledOldBack ? urlMethod : urlMore;
     var filterNew = filters;
 
-    var processResultsDefault = function (result: any) {
+    var processResultsDefault = function (result: any, params) {
+
       let dataList = result.dataList.map((item: any) => {
         let data = {
           id: item.id,
@@ -175,6 +172,7 @@ export class ApiService<T> {
         return data;
       });
 
+
       if (labelInitial) {
         dataList.unshift({
           id: '',
@@ -182,9 +180,25 @@ export class ApiService<T> {
         });
       }
 
+
+      if (filterBehavior == "GetDataListCustomPaging") {
+
+        params.page = params.page || 1;
+
+        return {
+          results: dataList,
+          pagination: {
+            more: (params.page * result.summary.pageSize) < result.summary.total
+          }
+        };
+
+      }
+
       return {
-        results: dataList
+        results: dataList,
       };
+
+
     };
 
     if (processResultsCustom)
@@ -201,7 +215,8 @@ export class ApiService<T> {
         });
 
         filterComposite["ids"] = null;
-        filterComposite[filterFieldName] = params.term
+        filterComposite[filterFieldName] = params.term;
+        filterComposite.pageIndex = params.page || 1;
 
         return toQueryString(filterComposite);
 
@@ -286,21 +301,20 @@ export class ApiService<T> {
     }
     let _count = 0;
     this.loading(this.getResource(), true, _count);
-    return this.processResponse(this.http.get(url, this.requestOptions().merge(new RequestOptions({ search: this.makeSearchParams(filters) }))), _count, false, true);
+    return this.processResponse(this.http.get(url, Object.assign(this.requestOptions(),{ params: this.makeSearchParams(filters) })), _count, false, true);
 
   }
 
-  private requestOptions(contentType: boolean = true): RequestOptions {
-    const headers = new Headers(this.defaultHeaders(contentType));
-    return new RequestOptions({ headers: headers });
+  private requestOptions(contentType: boolean = true): any {
+    return { headers: this.defaultHeaders(contentType) }
   }
 
-  private requestOptionsBlob(contentType: boolean = true): RequestOptions {
+  private requestOptionsBlob(contentType: boolean = true):any {
     const headers = new Headers(this.defaultHeaders(contentType));
-    return new RequestOptions({
+    return {
       headers: headers,
-      responseType: ResponseContentType.Blob
-    });
+      //responseType: ResponseContentType.Blob
+    };
   }
 
 
@@ -377,8 +391,8 @@ export class ApiService<T> {
     return url;
   }
 
-  private makeSearchParams(filters?: any): URLSearchParams {
-    const params = new URLSearchParams('', new CustomQueryEncoder());
+  private makeSearchParams(filters?: any): HttpParams {
+    const params = new HttpParams();
     if (filters != null) {
       for (const key in filters) {
 
@@ -399,18 +413,18 @@ export class ApiService<T> {
     return params;
   }
 
-  private successJsonResult(response: Response): Observable<T> {
-    let _response = response.json();
+  private successJsonResult(response: Observable<any>): Observable<T> {
+    let _response = response
     return _response;
   }
 
-  private successResult(response: Response): Response {
+  private successResult(response: any): any {
     return response;
   }
 
-  private errorResult(response: Response): Observable<T> {
+  private errorResult(response: any): Observable<T> {
 
-   if (response.status == 401) {
+    if (response.status == 401) {
       this.router.navigate(["/login"]);
     }
 
@@ -418,11 +432,11 @@ export class ApiService<T> {
       this.router.navigate(["/unauthorized"]);
     }
 
-    let _response = response.json();
+    let _response = response;
     let erros = "ocorreu um erro!";
-    if (_response.result != null) {
-      erros = _response.result.errors[0];
-    }
+    //if (_response.result != null) {
+    //  erros = _response.result.errors[0];
+    //}
 
     if (!this._enableNotifification)
       return;
@@ -447,7 +461,7 @@ export class ApiService<T> {
     if (!this._enableNotifification)
       return;
 
-    let _response = response.json();
+    let _response = response;
 
     if (_response.warning && _response.warning.warnings && _response.warning.warnings.length > 0) {
       for (var index in _response.warning.warnings) {
@@ -495,11 +509,11 @@ export class ApiService<T> {
   }
 
   private countReponse(res: any) {
-    return res.json().dataList ? res.json().dataList.length : res.json().data ? 1 : 0;
+    return res.dataList ? res.dataList.length : res.data ? 1 : 0;
   }
 
 
-  private processResponse(response: Observable<Response>, _count: number, notification: boolean, jsonResult: boolean): Observable<any> {
+  private processResponse(response: Observable<any>, _count: number, notification: boolean, jsonResult: boolean): Observable<any> {
     return response.pipe(
       map(res => {
 
@@ -512,6 +526,7 @@ export class ApiService<T> {
 
       }),
       catchError(error => {
+        //console.log(error);
         return this.errorResult(error);
       }),
       finalize(() => {
@@ -526,26 +541,27 @@ export class ApiService<T> {
     }));
   }
 
-  private processResponseFile(response: Observable<Response>): Observable<T> {
+  private processResponseFile(response: Observable<any>): Observable<T> {
     return response.pipe(map(res => {
-      return res.json();
+      return res;
     }));
   }
 
   private riseThrow(erros: any) {
-    return Observable.throw(erros);
+    return throwError(erros);
+    //return Observable.throw(erros);
   }
 
 }
 
-export class CustomQueryEncoder extends QueryEncoder {
+//export class CustomQueryEncoder extends QueryEncoder {
 
-  encodeKey(k: string): string {
-    k = super.encodeKey(k);
-    return k.replace(/\+/gi, '%2B');
-  }
-  encodeValue(v: string): string {
-    v = super.encodeKey(v);
-    return v.replace(/\+/gi, '%2B');
-  }
-}
+//  encodeKey(k: string): string {
+//    k = super.encodeKey(k);
+//    return k.replace(/\+/gi, '%2B');
+//  }
+//  encodeValue(v: string): string {
+//    v = super.encodeKey(v);
+//    return v.replace(/\+/gi, '%2B');
+//  }
+//}

@@ -14,14 +14,19 @@ export class AuthGuard implements CanActivate {
     this.authService.getCurrentUser((result: any, firstTime: any) => {
       var permissions = JSON.parse(result.claims.tools);
 
-      console.log("permissions",permissions)
+      console.log("permissions", permissions);
+      console.log("url", state.url);
+      
       var canAccess = permissions.filter((item) => {
 
         if (item.Route + "/create" == state.url && item.CanWrite)
           return true;
 
-        if (state.url.startsWith(item.Route + "/edit/") && item.CanWrite)
+        if (state.url.startsWith(item.Route + "/edit/") && item.CanWrite) {
+
+          console.log("canActivate edit")
           return true;
+        }
 
         if (state.url.startsWith(item.Route + "/details/") && state.url && item.CanReadOne)
           return true;
@@ -45,6 +50,11 @@ export class AuthGuard implements CanActivate {
     return this.authService.IsAuthApiVerify().pipe(map((response) => {
       if (response.status == 401 || response.status == 403) {
         this.router.navigate(["/login"]);
+        return false;
+      }
+      
+      if (response.status == 403) {
+        this.router.navigate(["/unauthorized"]);
         return false;
       }
       return true;

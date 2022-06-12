@@ -126,6 +126,7 @@ export class EndPoints {
   public AUTH: string;
   public APP: string;
   public DOWNLOAD: string;
+  public WIRECARD_KEY: string;
 
   constructor() {
 
