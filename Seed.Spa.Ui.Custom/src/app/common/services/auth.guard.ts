@@ -13,6 +13,8 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     this.authService.getCurrentUser((result: any, firstTime: any) => {
       var permissions = JSON.parse(result.claims.tools);
+
+      console.log("permissions",permissions)
       var canAccess = permissions.filter((item) => {
 
         if (item.Route + "/create" == state.url && item.CanWrite)
