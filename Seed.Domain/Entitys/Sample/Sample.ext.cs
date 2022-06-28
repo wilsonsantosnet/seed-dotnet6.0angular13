@@ -1,12 +1,14 @@
 ﻿using Seed.Domain.Validations;
 using System;
 using Common.Domain.Model;
+using System.Collections.Generic;
 
 namespace Seed.Domain.Entitys
 {
     public class Sample : SampleBase
     {
 
+        public virtual List<SampleItem> CollectionSampleItem { get; set; }
         public Sample()
         {
 

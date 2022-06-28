@@ -17,6 +17,7 @@ using Seed.Data.Context;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Seed.Api
 {
@@ -44,8 +45,8 @@ namespace Seed.Api
 			//Camelcase para json
             services.AddControllers().AddJsonOptions(options =>
             {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                options.JsonSerializerOptions.IgnoreNullValues = true;
                 options.JsonSerializerOptions.WriteIndented = false;
                 options.JsonSerializerOptions.AllowTrailingCommas = true;
                 options.JsonSerializerOptions.Converters.Add(new StringJsonConverter());

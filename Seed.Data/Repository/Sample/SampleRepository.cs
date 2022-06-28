@@ -10,43 +10,47 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
 using Common.Domain.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Seed.Data.Repository
 {
     public class SampleRepository : Repository<Sample>, ISampleRepository
     {
         private CurrentUser _user;
+
         public SampleRepository(DbContextSeed ctx, CurrentUser user) : base(ctx)
         {
-			this._user = user;
+            this._user = user;
+
         }
 
-      
+
         public IQueryable<Sample> GetBySimplefilters(SampleFilter filters)
         {
             var querybase = this.GetAll(this.DataAgregation(filters))
-								.WithBasicFilters(filters)
-								.WithCustomFilters(filters)
-								.OrderByDomain(filters)
+                                .WithBasicFilters(filters)
+                                .WithCustomFilters(filters)
+                                .OrderByDomain(filters)
                                 .OrderByProperty(filters);
             return querybase;
         }
 
         public async Task<Sample> GetById(SampleFilter model)
         {
+
             var _sample = await this.SingleOrDefaultAsync(this.GetAll(this.DataAgregation(model))
-               .Where(_=>_.SampleId == model.SampleId));
+         .Where(_ => _.SampleId == model.SampleId));
 
             return _sample;
         }
 
-		public async Task<IEnumerable<dynamic>> GetDataItem(SampleFilter filters)
+        public async Task<IEnumerable<dynamic>> GetDataItem(SampleFilter filters)
         {
             var querybase = await this.ToListAsync(this.GetBySimplefilters(filters).Select(_ => new
             {
                 Id = _.SampleId,
-				Name = _.Name
-            })); 
+                Name = _.Name
+            }));
 
             return querybase;
         }
@@ -62,7 +66,7 @@ namespace Seed.Data.Repository
             return querybase;
         }
 
-		
+
         public async Task<PaginateResult<dynamic>> GetDataListCustomPaging(SampleFilter filters)
         {
             var querybase = await this.PagingDataListCustom<dynamic>(filters, this.GetBySimplefilters(filters).Select(_ => new
@@ -76,7 +80,7 @@ namespace Seed.Data.Repository
         {
             var querybase = await this.ToListAsync(this.GetBySimplefilters(filters).Select(_ => new
             {
-               Id = _.SampleId
+                Id = _.SampleId
 
             }));
 
@@ -97,7 +101,7 @@ namespace Seed.Data.Repository
 
         protected override IQueryable<dynamic> DefineFieldsGetByFilters(IQueryable<Sample> source, FilterBase filters)
         {
-			if (filters.QueryOptimizerBehavior == "queryOptimizerBehavior")
+            if (filters.QueryOptimizerBehavior == "queryOptimizerBehavior")
             {
                 return source.Select(_ => new
                 {
@@ -135,7 +139,7 @@ namespace Seed.Data.Repository
             return source.SingleOrDefault();
         }
 
-		protected override Expression<Func<Sample, object>>[] DataAgregation(Expression<Func<Sample, object>>[] includes, FilterBase filter)
+        protected override Expression<Func<Sample, object>>[] DataAgregation(Expression<Func<Sample, object>>[] includes, FilterBase filter)
         {
             return base.DataAgregation(includes, filter);
         }

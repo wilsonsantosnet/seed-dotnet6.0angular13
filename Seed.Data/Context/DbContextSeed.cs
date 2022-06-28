@@ -19,6 +19,7 @@ namespace Seed.Data.Context
         {
             new SampleMap(modelBuilder.Entity<Sample>());
             new SampleTypeMap(modelBuilder.Entity<SampleType>());
+            new SampleItemMap(modelBuilder.Entity<SampleItem>());
 
         }
 

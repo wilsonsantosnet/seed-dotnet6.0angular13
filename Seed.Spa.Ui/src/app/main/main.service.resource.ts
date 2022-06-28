@@ -17,6 +17,7 @@ export class MainServiceResource extends ServiceBase {
     return {
             Sample: { label: 'Sample' },
       SampleType: { label: 'SampleType' },
+      SampleItem: { label: 'SampleItem' },
     };
   }
 
