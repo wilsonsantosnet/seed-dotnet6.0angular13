@@ -11,8 +11,7 @@ namespace Common.Gen
     public class  HelperSysObjectsAngular : HelperSysObjectsBaseFront
     {
 
-        public HelperSysObjectsAngular(Context context)
-            :this(context, "Templates\\Front")
+        public HelperSysObjectsAngular(Context context) :this(context, "Templates\\Front")
         {
 
         }

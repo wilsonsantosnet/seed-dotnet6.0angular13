@@ -1,4 +1,4 @@
-﻿
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ViewModel } from '../../../common/model/viewmodel';
@@ -20,12 +20,29 @@ export class SampleFieldGridComponent implements OnInit {
   @Output() orderBy = new EventEmitter<any>();
   @Output() filter = new EventEmitter<any>();
 
+  @Input() showCustom: boolean;
+  @Input() showFilters: boolean;
+  @Input() showEdit: boolean;
+  @Input() showDetails: boolean;
+  @Input() showPrint: boolean;
+  @Input() showDelete: boolean
+  @Input() showOrderBy: boolean;
+  @Input() showCheckbox: boolean;
+  @Input() showAction: boolean;
+
   _isAsc: boolean;
 
   constructor() { }
 
   ngOnInit() {
-
+    this._isAsc = true;
+    this.showEdit = true;
+    this.showDetails = true;
+    this.showPrint = true;
+    this.showDelete = true;
+    this.showOrderBy = true;
+    this.showCheckbox = false;
+    this.showAction = true;
   }
 
   onEdit(evt: any, model: any) {

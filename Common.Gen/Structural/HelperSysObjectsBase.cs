@@ -23,6 +23,8 @@ namespace Common.Gen
         protected IEnumerable<string> _camelCasingExceptions;
         protected SqlConnection conn { get; set; }
         public IEnumerable<Context> Contexts { get; set; }
+        
+        protected HelperControlHtml _htmlControls;
 
         public abstract void DefineTemplateByTableInfoFields(Context config, TableInfo tableInfo, UniqueListInfo infos);
         public abstract void DefineTemplateByTableInfo(Context config, TableInfo tableInfo);

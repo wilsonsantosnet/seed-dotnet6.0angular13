@@ -6,6 +6,7 @@
         public abstract void DefineTemplateByTableInfoFront(Context config, TableInfo tableInfo);
         public abstract void DefineTemplateByTableInfoFieldsBack(Context config, TableInfo tableInfo, UniqueListInfo infos);
         public abstract void DefineTemplateByTableInfoBack(Context config, TableInfo tableInfo);
+        public abstract HelperSysObjectsBase DefineFrontTemplateClass(Context config);
 
     }
 }

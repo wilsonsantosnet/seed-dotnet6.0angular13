@@ -31,6 +31,9 @@ export class SampleFieldEditComponent implements OnInit {
     }
 
         
+    public onEditorKeyupdescricao(model : any) {
 
+        this.vm.model.descricao = model;
+    }
    
 }

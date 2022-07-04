@@ -23,6 +23,7 @@ namespace Seed.Data.Map
             type.Property(t => t.Category).HasColumnName("Category");
             type.Property(t => t.Datetime).HasColumnName("Datetime");
             type.Property(t => t.Tags).HasColumnName("Tags").HasColumnType("varchar(1000)");
+            type.Property(t => t.FilePath).HasColumnName("FilePath").HasColumnType("varchar(500)");
             type.Property(t => t.UserCreateId).HasColumnName("UserCreateId");
             type.Property(t => t.UserCreateDate).HasColumnName("UserCreateDate");
             type.Property(t => t.UserAlterId).HasColumnName("UserAlterId");

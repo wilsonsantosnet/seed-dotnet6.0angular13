@@ -69,6 +69,11 @@ namespace Seed.Data.Repository
 				
 				queryFilter = queryFilter.Where(_=>_.Tags.Contains(filters.Tags));
 			}
+            if (filters.FilePath.IsSent()) 
+			{ 
+				
+				queryFilter = queryFilter.Where(_=>_.FilePath.Contains(filters.FilePath));
+			}
             if (filters.UserCreateId.IsSent()) 
 			{ 
 				

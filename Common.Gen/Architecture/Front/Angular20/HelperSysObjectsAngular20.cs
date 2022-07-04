@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Common.Gen.Structural;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 
 
@@ -10,12 +9,13 @@ namespace Common.Gen
 
     public class HelperSysObjectsAngular20 : HelperSysObjectsBaseFront
     {
-        public HelperSysObjectsAngular20(Context context) : this(context, "Templates\\Front")
+
+        public HelperSysObjectsAngular20(Context context) : this(context, "Templates\\Front", new HelperControlHtmlAngular20())
         {
 
         }
 
-        public HelperSysObjectsAngular20(Context context, string template)
+        public HelperSysObjectsAngular20(Context context, string template, HelperControlHtml htmlControls)
         {
             var _contexts = new List<Context> {
                 context
@@ -24,6 +24,7 @@ namespace Common.Gen
             this.Contexts = _contexts;
             this._defineTemplateFolder = new DefineTemplateFolder();
             this._defineTemplateFolder.SetTemplatePathBase(template);
+            this._htmlControls = htmlControls;
 
         }
 
@@ -107,7 +108,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
-                var str = HelperControlHtmlAngular20.MakeInputFilterHtml();
+                var str = this._htmlControls.MakeInputFilterHtml();
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm
                     .Replace("<#propertyName#>", propertyName)
@@ -119,7 +120,7 @@ namespace Common.Gen
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit || configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
                 var isStringLengthBig = base.IsStringLengthBig(info, configExecutetemplate.ConfigContext);
-                var str = HelperControlHtmlAngular20.MakeInputHtml(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, isStringLengthBig, propertyName);
+                var str = this._htmlControls.MakeInputHtml(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, isStringLengthBig, propertyName);
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm.Replace("<#propertyName#>", propertyName)
                     .Replace("<#className#>", configExecutetemplate.TableInfo.ClassName);
@@ -137,7 +138,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
-                var str = HelperControlHtmlAngular20.MakeDatePikerFilter();
+                var str = this._htmlControls.MakeDatePikerFilter();
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm.Replace("<#propertyName#>", propertyName);
                 return field;
@@ -146,9 +147,9 @@ namespace Common.Gen
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit || configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
                 var attrFieldConfig = HelperFieldConfig.GetAttr(configExecutetemplate.TableInfo, propertyName);
-                var str = HelperControlHtmlAngular20.MakeDateTimePiker(IsRequired(info), attrFieldConfig);
-                if (onlyDate) str = HelperControlHtmlAngular20.MakeDatePiker(IsRequired(info), attrFieldConfig);
-                if (info.TypeOriginal.ToLower() == "date") str = HelperControlHtmlAngular20.MakeDatePiker(IsRequired(info), attrFieldConfig);
+                var str = this._htmlControls.MakeDateTimePiker(IsRequired(info), attrFieldConfig);
+                if (onlyDate) str = this._htmlControls.MakeDatePiker(IsRequired(info), attrFieldConfig);
+                if (info.TypeOriginal.ToLower() == "date") str = this._htmlControls.MakeDatePiker(IsRequired(info), attrFieldConfig);
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm.Replace("<#propertyName#>", propertyName)
                     .Replace("<#className#>", configExecutetemplate.TableInfo.ClassName);
@@ -164,7 +165,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
-                var str = HelperControlHtmlAngular20.MakeRadioFilter();
+                var str = this._htmlControls.MakeRadioFilter();
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm.Replace("<#propertyName#>", propertyName);
                 return field;
@@ -176,7 +177,7 @@ namespace Common.Gen
 
                 if (HelperFieldConfig.IsRadio(configExecutetemplate.TableInfo, propertyName))
                 {
-                    var str = HelperControlHtmlAngular20.MakeRadio(IsRequired(info), attrFieldConfig);
+                    var str = this._htmlControls.MakeRadio(IsRequired(info), attrFieldConfig);
                     var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                     field = itemForm.Replace("<#propertyName#>", propertyName)
                         .Replace("<#className#>", configExecutetemplate.TableInfo.ClassName);
@@ -185,7 +186,7 @@ namespace Common.Gen
                 }
                 else
                 {
-                    var str = HelperControlHtmlAngular20.MakeCheckbox(IsRequired(info), attrFieldConfig);
+                    var str = this._htmlControls.MakeCheckbox(IsRequired(info), attrFieldConfig);
                     var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                     field = itemForm.Replace("<#propertyName#>", propertyName)
                         .Replace("<#className#>", configExecutetemplate.TableInfo.ClassName);
@@ -204,15 +205,15 @@ namespace Common.Gen
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
                 var attrFieldConfig = HelperFieldConfig.GetAttrFilter(configExecutetemplate.TableInfo, propertyName);
-                var str = HelperControlHtmlAngular20.MakeDropDownFilter(attrFieldConfig);
+                var str = this._htmlControls.MakeDropDownFilter(attrFieldConfig);
 
                 var isMultiSelectFilter = HelperFieldConfig.IsMultiSelectFilter(configExecutetemplate.TableInfo, propertyName);
                 if (isMultiSelectFilter)
-                    str = HelperControlHtmlAngular20.MakeMultiSelectFilter();
+                    str = this._htmlControls.MakeMultiSelectFilter();
 
                 var isSelectSearch = HelperFieldConfig.IsSelectSearch(configExecutetemplate.TableInfo, propertyName);
                 if (isSelectSearch)
-                    str = HelperControlHtmlAngular20.MakeDropDownSeachFilter();
+                    str = this._htmlControls.MakeDropDownSeachFilter();
 
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm
@@ -229,11 +230,11 @@ namespace Common.Gen
             {
                 var attrFieldConfig = HelperFieldConfig.GetAttr(configExecutetemplate.TableInfo, propertyName);
 
-                var str = HelperControlHtmlAngular20.MakeDropDown(IsRequired(info), attrFieldConfig);
+                var str = this._htmlControls.MakeDropDown(IsRequired(info), attrFieldConfig);
 
                 var isSelectSearch = HelperFieldConfig.IsSelectSearch(configExecutetemplate.TableInfo, propertyName);
                 if (isSelectSearch)
-                    str = HelperControlHtmlAngular20.MakeDropDownSeach(IsRequired(info), attrFieldConfig);
+                    str = this._htmlControls.MakeDropDownSeach(IsRequired(info), attrFieldConfig);
 
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm
@@ -259,10 +260,10 @@ namespace Common.Gen
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit || configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
             {
                 var htmlCtrl = HelperFieldConfig.FieldHtml(configExecutetemplate.TableInfo, propertyName);
-                var str = HelperControlHtmlAngular20.MakeCtrl(htmlCtrl.HtmlField);
+                var str = this._htmlControls.MakeCtrl(htmlCtrl.HtmlField);
 
                 if (configExecutetemplate.Operation == EOperation.Front_angular_FieldFilter)
-                    str = HelperControlHtmlAngular20.MakeCtrl(htmlCtrl.HtmlFilter);
+                    str = this._htmlControls.MakeCtrl(htmlCtrl.HtmlFilter);
 
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm.Replace("<#propertyName#>", propertyName)
@@ -281,7 +282,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit)
             {
-                var str = HelperControlHtmlAngular20.MakeUpload(info);
+                var str = this._htmlControls.MakeUpload(info);
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm.Replace("<#propertyName#>", propertyName)
                     .Replace("<#className#>", configExecutetemplate.TableInfo.ClassName);
@@ -298,7 +299,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit)
             {
-                var str = HelperControlHtmlAngular20.MakeTextStyle(IsRequired(info));
+                var str = this._htmlControls.MakeTextStyle(IsRequired(info));
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm
                     .Replace("<#propertyName#>", propertyName)
@@ -317,7 +318,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit)
             {
-                var str = HelperControlHtmlAngular20.MakeTextEditor(IsRequired(info));
+                var str = this._htmlControls.MakeTextEditor(IsRequired(info));
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm
                     .Replace("<#propertyName#>", propertyName)
@@ -336,7 +337,7 @@ namespace Common.Gen
 
             if (configExecutetemplate.Operation == EOperation.Front_angular_FieldsCreate || configExecutetemplate.Operation == EOperation.Front_angular_FieldsEdit)
             {
-                var str = HelperControlHtmlAngular20.MakeTextTag(IsRequired(info));
+                var str = this._htmlControls.MakeTextTag(IsRequired(info));
                 var itemForm = FormFieldReplace(configExecutetemplate.ConfigContext, configExecutetemplate.TableInfo, info, textTemplate, str);
                 field = itemForm
                     .Replace("<#propertyName#>", propertyName);

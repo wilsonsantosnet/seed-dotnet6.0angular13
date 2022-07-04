@@ -10,12 +10,12 @@ namespace Common.Gen
     public class HelperSysObjectsAngularJs : HelperSysObjectsBaseFront
     {
 
-
-        public HelperSysObjectsAngularJs(Context context) : this(context, @"Templates\Front")
+        private HelperControlHtmlAngularJs _htmlControlsJs;
+        public HelperSysObjectsAngularJs(Context context) : this(context, "Templates\\Front", new HelperControlHtmlAngularJs())
         {
 
         }
-        public HelperSysObjectsAngularJs(Context context, string template)
+        public HelperSysObjectsAngularJs(Context context, string template, HelperControlHtmlAngularJs htmlControls)
         {
             var _contexts = new List<Context> {
                 context
@@ -25,6 +25,7 @@ namespace Common.Gen
             context.UsePathProjects = true;
             this._defineTemplateFolder = new DefineTemplateFolder();
             this._defineTemplateFolder.SetTemplatePathBase(template);
+            this._htmlControlsJs = htmlControls;
         }
         public HelperSysObjectsAngularJs(IEnumerable<Context> contexts)
         {
@@ -749,24 +750,24 @@ namespace Common.Gen
                     if (item.Type == "string")
                     {
 
-                        var str = HelperControlHtml.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
+                        var str = HelperControlHtmlAngularJs.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
                     }
 
-                  
+
 
                     if (item.Type == "DateTime" || item.Type == "DateTime?")
                     {
-                        var str = HelperControlHtml.MakeDatetimepiker(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeDatetimepiker(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
                     }
                     else if (item.Type == "Date")
                     {
-                        var str = HelperControlHtml.MakeDatepiker(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeDatepiker(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -777,7 +778,7 @@ namespace Common.Gen
                         if (HelperFieldConfig.IsRadio(tableInfo, propertyName))
                         {
 
-                            var str = HelperControlHtml.MakeRadio(IsRequired(item));
+                            var str = HelperControlHtmlAngularJs.MakeRadio(IsRequired(item));
                             itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                             itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                                 .Replace("<#className#>", tableInfo.ClassName);
@@ -786,7 +787,7 @@ namespace Common.Gen
                         else
                         {
 
-                            var str = HelperControlHtml.MakeCheckbox(IsRequired(item));
+                            var str = HelperControlHtmlAngularJs.MakeCheckbox(IsRequired(item));
                             itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                             itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                                 .Replace("<#className#>", tableInfo.ClassName);
@@ -801,7 +802,7 @@ namespace Common.Gen
                             var isSelectSearch = HelperFieldConfig.IsSelectSearch(tableInfo, propertyName);
                             if (isSelectSearch)
                             {
-                                var str = HelperControlHtml.MakeDropDownSeach(IsRequired(item));
+                                var str = HelperControlHtmlAngularJs.MakeDropDownSeach(IsRequired(item));
                                 itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                                 itemForm = itemForm
                                     .Replace("<#propertyName#>", propertyName)
@@ -809,7 +810,7 @@ namespace Common.Gen
                             }
                             else
                             {
-                                var str = HelperControlHtml.MakeDropDown(IsRequired(item));
+                                var str = HelperControlHtmlAngularJs.MakeDropDown(IsRequired(item));
                                 itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                                 itemForm = itemForm
                                     .Replace("<#propertyName#>", propertyName)
@@ -818,7 +819,7 @@ namespace Common.Gen
                         }
                         else
                         {
-                            var str = HelperControlHtml.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
+                            var str = HelperControlHtmlAngularJs.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
                             itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                             itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                                 .Replace("<#className#>", tableInfo.ClassName);
@@ -830,7 +831,7 @@ namespace Common.Gen
                     var htmlCtrl = HelperFieldConfig.FieldHtml(tableInfo, propertyName);
                     if (htmlCtrl.IsNotNull())
                     {
-                        var str = HelperControlHtml.MakeCtrl(htmlCtrl.HtmlField);
+                        var str = HelperControlHtmlAngularJs.MakeCtrl(htmlCtrl.HtmlField);
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -839,7 +840,7 @@ namespace Common.Gen
                     var isUpload = HelperFieldConfig.IsUpload(tableInfo, propertyName);
                     if (isUpload)
                     {
-                        var str = HelperControlHtml.MakeUpload(item);
+                        var str = HelperControlHtmlAngularJs.MakeUpload(item);
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -849,7 +850,7 @@ namespace Common.Gen
                     var isTextStyle = HelperFieldConfig.IsTextStyle(tableInfo, propertyName);
                     if (isTextStyle)
                     {
-                        var str = HelperControlHtml.MakeTextStyle(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeTextStyle(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm
                             .Replace("<#propertyName#>", propertyName)
@@ -859,7 +860,7 @@ namespace Common.Gen
                     var isTextEditor = HelperFieldConfig.IsTextEditor(tableInfo, propertyName);
                     if (isTextEditor)
                     {
-                        var str = HelperControlHtml.MakeTextEditor(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeTextEditor(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm
                             .Replace("<#propertyName#>", propertyName)
@@ -916,7 +917,7 @@ namespace Common.Gen
                     var isStringLengthBig = IsStringLengthBig(item, configContext);
                     if (item.Type == "string")
                     {
-                        var str = HelperControlHtml.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
+                        var str = HelperControlHtmlAngularJs.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -924,14 +925,14 @@ namespace Common.Gen
                     }
                     if (item.Type == "DateTime" || item.Type == "DateTime?")
                     {
-                        var str = HelperControlHtml.MakeDatetimepiker(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeDatetimepiker(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
                     }
                     else if (item.Type == "Date")
                     {
-                        var str = HelperControlHtml.MakeDatepiker(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeDatepiker(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -941,7 +942,7 @@ namespace Common.Gen
 
                         if (HelperFieldConfig.IsRadio(tableInfo, propertyName))
                         {
-                            var str = HelperControlHtml.MakeRadio(IsRequired(item));
+                            var str = HelperControlHtmlAngularJs.MakeRadio(IsRequired(item));
                             itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                             itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                                 .Replace("<#className#>", tableInfo.ClassName);
@@ -950,7 +951,7 @@ namespace Common.Gen
                         else
                         {
 
-                            var str = HelperControlHtml.MakeCheckbox(IsRequired(item));
+                            var str = HelperControlHtmlAngularJs.MakeCheckbox(IsRequired(item));
                             itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                             itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                                 .Replace("<#className#>", tableInfo.ClassName);
@@ -964,7 +965,7 @@ namespace Common.Gen
                             var isSelectSearch = HelperFieldConfig.IsSelectSearch(tableInfo, propertyName);
                             if (isSelectSearch)
                             {
-                                var str = HelperControlHtml.MakeDropDownSeach(IsRequired(item));
+                                var str = HelperControlHtmlAngularJs.MakeDropDownSeach(IsRequired(item));
                                 itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                                 itemForm = itemForm
                                     .Replace("<#propertyName#>", propertyName)
@@ -972,7 +973,7 @@ namespace Common.Gen
                             }
                             else
                             {
-                                var str = HelperControlHtml.MakeDropDown(IsRequired(item));
+                                var str = HelperControlHtmlAngularJs.MakeDropDown(IsRequired(item));
                                 itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                                 itemForm = itemForm
                                     .Replace("<#propertyName#>", propertyName)
@@ -981,7 +982,7 @@ namespace Common.Gen
                         }
                         else
                         {
-                            var str = HelperControlHtml.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
+                            var str = HelperControlHtmlAngularJs.MakeInputHtml(tableInfo, item, isStringLengthBig, propertyName);
                             itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                             itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                                 .Replace("<#className#>", tableInfo.ClassName);
@@ -994,7 +995,7 @@ namespace Common.Gen
                     var htmlCtrl = HelperFieldConfig.FieldHtml(tableInfo, propertyName);
                     if (htmlCtrl.IsNotNull())
                     {
-                        var str = HelperControlHtml.MakeCtrl(htmlCtrl.HtmlField);
+                        var str = HelperControlHtmlAngularJs.MakeCtrl(htmlCtrl.HtmlField);
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -1003,7 +1004,7 @@ namespace Common.Gen
                     var isUpload = HelperFieldConfig.IsUpload(tableInfo, propertyName);
                     if (isUpload)
                     {
-                        var str = HelperControlHtml.MakeUpload(item);
+                        var str = HelperControlHtmlAngularJs.MakeUpload(item);
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm.Replace("<#propertyName#>", propertyName)
                             .Replace("<#className#>", tableInfo.ClassName);
@@ -1012,7 +1013,7 @@ namespace Common.Gen
                     var isTextStyle = HelperFieldConfig.IsTextStyle(tableInfo, propertyName);
                     if (isTextStyle)
                     {
-                        var str = HelperControlHtml.MakeTextStyle(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeTextStyle(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm
                             .Replace("<#propertyName#>", propertyName)
@@ -1023,7 +1024,7 @@ namespace Common.Gen
                     var isTextEditor = HelperFieldConfig.IsTextEditor(tableInfo, propertyName);
                     if (isTextEditor)
                     {
-                        var str = HelperControlHtml.MakeTextEditor(IsRequired(item));
+                        var str = HelperControlHtmlAngularJs.MakeTextEditor(IsRequired(item));
                         itemForm = FormFieldReplace(configContext, tableInfo, item, textTemplateForm, str);
                         itemForm = itemForm
                             .Replace("<#propertyName#>", propertyName)
@@ -1142,7 +1143,7 @@ namespace Common.Gen
                         itemForm = textTemplateDetailsFields.Replace("<#propertyName#>", propertyName);
                         itemForm = itemForm.Replace("<#type#>", "textEditor")
                                             .Replace("<#moreattr#>", string.Empty)
-                                            .Replace("<#moredesc#>", string.Empty); 
+                                            .Replace("<#moredesc#>", string.Empty);
 
                     }
                     else if (item.Type == "bool" || item.Type == "bool?")
@@ -1179,7 +1180,7 @@ namespace Common.Gen
                         itemForm = options.Replace("<#propertyName#>", propertyName);
                         itemForm = itemForm.Replace("<#type#>", item.Type)
                                             .Replace("<#moreattr#>", string.Empty)
-                                            .Replace("<#moredesc#>", string.Empty); 
+                                            .Replace("<#moredesc#>", string.Empty);
                     }
 
                     classBuilderDetailsFields += string.Format("{0}{1}", itemForm, System.Environment.NewLine);
@@ -1258,7 +1259,7 @@ namespace Common.Gen
                         itemFilterFields = textTemplateFilter
                             .Replace("<#propertyName#>", propertyName)
                             .Replace("<#labelAux#>", string.Empty)
-                            .Replace("<#filterfield#>", HelperControlHtml.MakeInputFilterHtml()
+                            .Replace("<#filterfield#>", this._htmlControlsJs.MakeInputFilterHtml()
                             .Replace("<#propertyName#>", propertyName)
                             .Replace("<#ClassName#>", item.ClassName));
 
@@ -1268,14 +1269,14 @@ namespace Common.Gen
                         itemFilterFieldsStart = textTemplateFilter
                             .Replace("<#propertyName#>", propertyName)
                             .Replace("<#labelAux#>", "Inicio")
-                            .Replace("<#filterfield#>", HelperControlHtml.MakeDatapikerFilter(string.Format("{0}Start", propertyName))
+                            .Replace("<#filterfield#>", this._htmlControlsJs.MakeDatapikerFilter(string.Format("{0}Start", propertyName))
                             .Replace("<#propertyName#>", propertyName)
                             .Replace("<#ClassName#>", item.ClassName));
 
                         itemFilterFieldsEnd = textTemplateFilter
                            .Replace("<#propertyName#>", propertyName)
                            .Replace("<#labelAux#>", "Fim")
-                           .Replace("<#filterfield#>", HelperControlHtml.MakeDatapikerFilter(string.Format("{0}End", propertyName))
+                           .Replace("<#filterfield#>", this._htmlControlsJs.MakeDatapikerFilter(string.Format("{0}End", propertyName))
                            .Replace("<#propertyName#>", propertyName)
                            .Replace("<#ClassName#>", item.ClassName));
 
@@ -1286,7 +1287,7 @@ namespace Common.Gen
                         itemFilterFields = textTemplateFilter
                             .Replace("<#propertyName#>", propertyName)
                             .Replace("<#labelAux#>", string.Empty)
-                            .Replace("<#filterfield#>", HelperControlHtml.MakeCheckboxFilter()
+                            .Replace("<#filterfield#>", this._htmlControlsJs.MakeCheckboxFilter()
                             .Replace("<#propertyName#>", propertyName)
                             .Replace("<#ClassName#>", item.ClassName));
 
@@ -1299,7 +1300,7 @@ namespace Common.Gen
                             itemFilterFields = textTemplateFilter
                                    .Replace("<#propertyName#>", propertyName)
                                    .Replace("<#labelAux#>", string.Empty)
-                                   .Replace("<#filterfield#>", HelperControlHtml.MakeDropDownFilter()
+                                   .Replace("<#filterfield#>", this._htmlControlsJs.MakeDropDownFilter()
                                    .Replace("<#propertyName#>", propertyName)
                                    .Replace("<#ClassName#>", item.ClassName))
                                    .Replace("<#ReletedClass#>", PropertyNavigationTypeInstance(tableInfo, item.PropertyName));
@@ -1310,7 +1311,7 @@ namespace Common.Gen
                             itemFilterFields = textTemplateFilter
                                     .Replace("<#propertyName#>", propertyName)
                                     .Replace("<#labelAux#>", string.Empty)
-                                    .Replace("<#filterfield#>", HelperControlHtml.MakeInputFilterHtml()
+                                    .Replace("<#filterfield#>", this._htmlControlsJs.MakeInputFilterHtml()
                                     .Replace("<#propertyName#>", propertyName)
                                     .Replace("<#ClassName#>", item.ClassName));
 
@@ -1324,7 +1325,7 @@ namespace Common.Gen
                         itemFilterFields = textTemplateFilter
                                     .Replace("<#propertyName#>", propertyName)
                                     .Replace("<#labelAux#>", string.Empty)
-                                    .Replace("<#filterfield#>", HelperControlHtml.MakeCtrlFilter(HtmlCtrl.HtmlFilter)
+                                    .Replace("<#filterfield#>", this._htmlControlsJs.MakeCtrlFilter(HtmlCtrl.HtmlFilter)
                                     .Replace("<#propertyName#>", propertyName)
                                     .Replace("<#ClassName#>", item.ClassName));
                     }

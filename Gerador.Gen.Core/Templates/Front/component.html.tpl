@@ -22,7 +22,7 @@
         </div>
       </header>
       <article class="card-body">
-        <make-grid [(vm)]="vm" (edit)="onEdit($event)" (details)="onDetails($event)" (print)="onPrint($event)" (deleteConfimation)="onDeleteConfimation($event)" (orderBy)="onOrderBy($event)"  (filter)="onFilter($event)" [showFilters]='true' [showPrint]='_showBtnPrint && vm | isAuth:"CanReadOne"' [showDelete]='_showBtnDelete && vm | isAuth:"CanDelete"' [showDetails]='_showBtnDetails && vm | isAuth:"CanReadOne"' [showEdit]='_showBtnEdit && vm | isAuth:"CanReadOne"'></make-grid>
+        <app-<#classNameLowerAndSeparator#>-field-grid [(vm)]="vm" (edit)="onEdit($event)" (details)="onDetails($event)" (print)="onPrint($event)" (deleteConfimation)="onDeleteConfimation($event)" (orderBy)="onOrderBy($event)"  (filter)="onFilter($event)" [showFilters]='true' [showPrint]='_showBtnPrint && vm | isAuth:"CanReadOne"' [showDelete]='_showBtnDelete && vm | isAuth:"CanDelete"' [showDetails]='_showBtnDetails && vm | isAuth:"CanReadOne"' [showEdit]='_showBtnEdit && vm | isAuth:"CanReadOne"'></app-<#classNameLowerAndSeparator#>-field-grid>
       </article>
       <footer class="card-footer">
         <make-pagination [(vm)]="vm" (pageChanged)="onPageChanged($event)"></make-pagination>

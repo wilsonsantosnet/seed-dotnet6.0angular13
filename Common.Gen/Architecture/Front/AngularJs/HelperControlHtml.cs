@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.Gen
 {
-    public static class HelperControlHtml
+    public class HelperControlHtmlAngularJs 
     {
 
         #region Form Fields
@@ -275,7 +275,7 @@ namespace Common.Gen
 
         #region Filter Fields
 
-        public static string MakeInputFilterHtml()
+        public string MakeInputFilterHtml()
         {
 
             return @"<div class='form-group'>
@@ -285,7 +285,7 @@ namespace Common.Gen
 
         }
 
-        public static string MakeCtrlFilter(string ctrl)
+        public string MakeCtrlFilter(string ctrl)
         {
             return @"<div class='form-group'>
                     <label>{{ ::vm.Labels.<#propertyName#> }}</label>
@@ -293,7 +293,7 @@ namespace Common.Gen
                 </div>";
         }
 
-        public static string MakeDropDownFilter()
+        public string MakeDropDownFilter()
         {
             return @"<div class='form-group'>
                     <label>{{ ::vm.Labels.<#propertyName#> }}</label>
@@ -302,7 +302,7 @@ namespace Common.Gen
 
         }
 
-        public static string MakeDatapikerFilter(string propertyName = "<#propertyName#>")
+        public string MakeDatapikerFilter(string propertyName = "<#propertyName#>")
         {
             return @"<div class='form-group'>
                     <label>{{ ::vm.Labels.<#propertyName#> }}</label>" +
@@ -310,7 +310,7 @@ namespace Common.Gen
                 "</div>";
         }
 
-        public static string MakeCheckboxFilter()
+        public string MakeCheckboxFilter()
         {
 
             return @"                <div class='checkbox'>

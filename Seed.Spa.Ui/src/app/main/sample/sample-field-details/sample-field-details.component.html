@@ -4,11 +4,15 @@
  
 
     <dt>{{ vm.infos | traduction: 'descricao' }}:</dt>
-    <dd><bind-custom [model]="vm.details.descricao" [format]="'string'" [tag]="'span'" ></bind-custom></dd>
+    <dd><bind-custom [model]="vm.details.descricao" [format]="'html'" [tag]="'span'" ></bind-custom></dd>
  
 
     <dt>{{ vm.infos | traduction: 'tags' }}:</dt>
     <dd><bind-custom [model]="vm.details.tags" [format]="'string'" [tag]="'span'" ></bind-custom></dd>
+ 
+
+    <dt>{{ vm.infos | traduction: 'filePath' }}:</dt>
+    <dd><bind-custom [model]="vm.details.filePath" [format]="'string'" [tag]="'span'" ></bind-custom></dd>
  
 
     <dt>{{ vm.infos | traduction: 'datetime' }}:</dt>

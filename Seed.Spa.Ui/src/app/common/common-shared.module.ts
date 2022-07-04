@@ -7,6 +7,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TagInputModule } from 'ngx-chips';
 import { TextMaskModule } from 'angular2-text-mask';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { DataSourceDirective } from './directives/select-datasource.directive';
 import { MaskInputDirective } from './directives/mask-input.directive';
@@ -58,6 +59,7 @@ import { MakeGridOrderComponent } from './components/grid-order.component';
     ModalModule.forRoot(),
     FormsModule,
     TextMaskModule,
+    EditorModule,
     TagInputModule,
     TabsModule.forRoot(),
   ],
@@ -130,6 +132,7 @@ import { MakeGridOrderComponent } from './components/grid-order.component';
     DataSourceShowDirective,
     NestableDirective,
     TextMaskModule,
+    EditorModule,
     TagInputModule,
     TabsModule,
     LoadingOnSideComponent,

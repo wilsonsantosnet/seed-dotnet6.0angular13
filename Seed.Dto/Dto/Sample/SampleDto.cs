@@ -43,6 +43,10 @@ namespace Seed.Dto
 
         public virtual string Tags {get; set;}
 
+        
+
+        public virtual string FilePath {get; set;}
+
 
 		
 	}

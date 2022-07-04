@@ -28,8 +28,8 @@ namespace Common.Gen
             if (contextDDD.IsAny())
                 this._ddd = new HelperSysObjectsDDD(contextDDD, TemplatePathBackDDD);
         }
-       
-        public virtual HelperSysObjectsBase DefineFrontTemplateClass(Context config)
+
+        public override HelperSysObjectsBase DefineFrontTemplateClass(Context config)
         {
             return new HelperSysObjectsAngular20(config);
         }

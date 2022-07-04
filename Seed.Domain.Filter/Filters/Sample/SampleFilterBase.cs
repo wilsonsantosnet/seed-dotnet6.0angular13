@@ -19,6 +19,7 @@ namespace Seed.Domain.Filter
         public virtual DateTime? DatetimeEnd { get; set;} 
         public virtual DateTime? Datetime { get; set;} 
         public virtual string Tags { get; set;} 
+        public virtual string FilePath { get; set;} 
         public virtual int UserCreateId { get; set;} 
         public virtual DateTime UserCreateDateStart { get; set;} 
         public virtual DateTime UserCreateDateEnd { get; set;} 

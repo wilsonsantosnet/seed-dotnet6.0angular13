@@ -34,6 +34,7 @@ namespace Seed.Domain.Entitys
                 construction.SetarCategory(data.Category);
                 construction.SetarDatetime(data.Datetime);
                 construction.SetarTags(data.Tags);
+                construction.SetarFilePath(data.FilePath);
 
 
 				construction.SetConfirmBehavior(data.ConfirmBehavior);
@@ -52,6 +53,7 @@ namespace Seed.Domain.Entitys
         public virtual int? Category { get; protected set; }
         public virtual DateTime? Datetime { get; protected set; }
         public virtual string Tags { get; protected set; }
+        public virtual string FilePath { get; protected set; }
 
 		public virtual void SetarDescricao(string descricao)
 		{
@@ -76,6 +78,10 @@ namespace Seed.Domain.Entitys
 		public virtual void SetarTags(string tags)
 		{
 			this.Tags = tags;
+		}
+		public virtual void SetarFilePath(string filepath)
+		{
+			this.FilePath = filepath;
 		}
 
 

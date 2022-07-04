@@ -145,7 +145,7 @@ export class EndPoints {
     this.AUTHAPI = configSettings.AUTHAPI;
     this.AUTH = configSettings.AUTH;
     this.APP = configSettings.APP;
-    this.DOWNLOAD = this.DEFAULT + "/document/download";
+    this.DOWNLOAD = this.DEFAULT + "/document/download/";
 
   }
 

@@ -12,8 +12,7 @@ namespace Common.Gen
     {
 
 
-        public HelperSysObjectsVue(Context context)
-            :this(context, "Templates\\Front")
+        public HelperSysObjectsVue(Context context)    :this(context, "Templates\\Front")
         { }
 
         public HelperSysObjectsVue(Context context, string template)
