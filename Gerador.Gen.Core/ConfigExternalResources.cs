@@ -15,56 +15,100 @@ namespace Seed.Gen
         }
 
 
-        private ExternalResource ConfigExternarResourcesTemplatesBackDDDCore20(bool replaceLocalFilesApplication)
+        private ExternalResource GeradorTemplateBack(bool replaceLocalFilesApplication)
         {
             return new ExternalResource
             {
                 ReplaceLocalFilesApplication = true,
-                ResouceRepositoryName = "backend-template-DDD",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/backend-template-DDD.git",
+                ResouceRepositoryName = "gerador-template-back",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-template-back.git",
                 ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\Gerador.Gen.Core\Templates\Back"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\Gerador.Gen.Core\Templates\Back"),
             };
         }
 
 
-        private ExternalResource ConfigExternarResourcesFrameworkCommon20(bool replaceLocalFilesApplication)
+        private ExternalResource GeradorTemplateFront(bool replaceLocalFilesApplication)
+        {
+            return new ExternalResource
+            {
+                ReplaceLocalFilesApplication = replaceLocalFilesApplication,
+                ResouceRepositoryName = "gerador-template-front",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-template-front.git",
+                ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\Gerador.Gen.Core\Templates\Front"),
+            };
+        }
+
+
+        private ExternalResource GeradorFrameworkBack(bool replaceLocalFilesApplication)
         {
             return new ExternalResource
             {
                 ReplaceLocalFilesApplication = true,
                 OnlyFoldersContainsThisName = "Common",
-                ResouceRepositoryName = "backend-framework-common",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/backend-framework-common.git",
+                ResouceRepositoryName = "gerador-framework-back",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-framework-back.git",
                 ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\"),
             };
 
         }
 
-        private ExternalResource ConfigExternarResourcesProjectBaseLayoutCoreUIAngular60(bool replaceLocalFilesApplication)
+
+        private ExternalResource GeradorFrameworkFront(bool replaceLocalFilesApplication)
+        {
+            return new ExternalResource
+            {
+                ReplaceLocalFilesApplication = replaceLocalFilesApplication,
+                ResouceRepositoryName = "gerador-framework-front",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-framework-front.git",
+                ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios\"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\Seed.Spa.Ui\src\app\common"),
+            };
+        }
+
+        
+        private ExternalResource GeradorProjectAdminFront(bool replaceLocalFilesApplication)
         {
             return new ExternalResource
             {
                 ReplaceLocalFilesApplication = true,
                 DownloadOneTime = true,
                 DownloadOneTimeFileVerify = "package.json",
-                ResouceRepositoryName = "project-base-layout-front-coreui-angular6.0",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/project-base-layout-front-coreui-angular6.0.git",
+                ResouceRepositoryName = "gerador-project-admin-front",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-project-admin-front.git",
                 ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\Seed.Spa.Ui\"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\Seed.Spa.Ui\"),
+            };
+        }
+      
+
+        private ExternalResource GeradorProjectSiteFront(bool replaceLocalFilesApplication)
+        {
+            return new ExternalResource
+            {
+                ReplaceLocalFilesApplication = replaceLocalFilesApplication,
+                DownloadOneTime = true,
+                DownloadOneTimeFileVerify = "package.json",
+                ResouceRepositoryName = "gerador-project-site-front",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-project-site-front.git",
+                ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios\"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\Seed.Spa.Ui.Custom"),
             };
         }
 
-        private ExternalResource ConfigExternarResourcesProjectBaseLayoutCoreUIAngular60OnlyThisFiles(bool replaceLocalFilesApplication)
+
+
+        private ExternalResource GeradorProjectAdminFrontThisFiles(bool replaceLocalFilesApplication)
         {
             return new ExternalResource
             {
                 ReplaceLocalFilesApplication = true,
-                ResouceRepositoryName = "project-base-layout-front-coreui-angular6.0",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/project-base-layout-front-coreui-angular6.0.git",
+                ResouceRepositoryName = "gerador-project-admin-front",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-project-admin-front.git",
                 ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\Seed.Spa.Ui\"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution\Seed.Spa.Ui\"),
                 OnlyThisFiles = new List<string> {
                     HelperUri.CombineRelativeUri(@"package.json"),
                     HelperUri.CombineRelativeUri(@"web.config"),
@@ -87,53 +131,15 @@ namespace Seed.Gen
             };
         }
 
-        private ExternalResource ConfigExternarResourcesTemplatesFrontCoreUiAngular60(bool replaceLocalFilesApplication)
-        {
-            return new ExternalResource
-            {
-                ReplaceLocalFilesApplication = replaceLocalFilesApplication,
-                ResouceRepositoryName = "template-gerador-front-coreui-angular6.0",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/template-gerador-front-coreui-angular6.0.git",
-                ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\Gerador.Gen.Core\Templates\Front"),
-            };
-        }
-
-        private ExternalResource ConfigExternarResourcesFrameworkAngula60Crud(bool replaceLocalFilesApplication)
-        {
-            return new ExternalResource
-            {
-                ReplaceLocalFilesApplication = replaceLocalFilesApplication,
-                ResouceRepositoryName = "framework-angular6.0-CRUD",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/framework-angular6.0-CRUD.git",
-                ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios\"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\Seed.Spa.Ui\src\app\common"),
-            };
-        }
-
-        private ExternalResource ConfigExternarResourcesProjectCustomLayoutCoreUIAngular80(bool replaceLocalFilesApplication)
-        {
-            return new ExternalResource
-            {
-                ReplaceLocalFilesApplication = replaceLocalFilesApplication,
-                DownloadOneTime = true,
-                DownloadOneTimeFileVerify = "package.json",
-                ResouceRepositoryName = "project-custom-layout-front-coreui-angular8.0",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/project-custom-layout-front-coreui-angular8.0.git",
-                ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios\"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty\Seed.Spa.Ui.Custom"),
-            };
-        }
-
-        private ExternalResource ConfigExternarResourcesProjectBaseItensSolutionOnlyThisFiles(bool replaceLocalFilesApplication)
+        private ExternalResource GeradorProjectAllSolutionThisFiles(bool replaceLocalFilesApplication)
         {
             return new ExternalResource
             {
                 ReplaceLocalFilesApplication = true,
-                ResouceRepositoryName = "solution-base-ddd-project-with-gerador-empty",
-                ResourceUrlRepository = "https://github.com/wilsonsantosnet/solution-base-ddd-project-with-gerador-empty.git",
+                ResouceRepositoryName = "gerador-project-all-solution",
+                ResourceUrlRepository = "https://github.com/wilsonsantosnet/gerador-project-all-solution.git",
                 ResourceLocalPathFolderExecuteCloning = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"Outros\Repositorios"),
-                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"solution-base-ddd-project-with-gerador-empty"),
+                ResourceLocalPathDestinationFolrderApplication = HelperUri.CombineAbsoluteUri(this._basicPathProject, @"gerador-project-all-solution"),
                 OnlyThisFiles = new List<string> {
                     HelperUri.CombineRelativeUri(@"Itens Solutions\Common.Domain.dll"),
                     HelperUri.CombineRelativeUri(@"Itens Solutions\Common.Gen.dll"),
@@ -142,6 +148,7 @@ namespace Seed.Gen
             };
 
         }
+
 
         public IEnumerable<ExternalResource> GetConfigExternarReources()
         {
@@ -153,14 +160,15 @@ namespace Seed.Gen
         {
             return new List<ExternalResource>
             {
-               ConfigExternarResourcesTemplatesBackDDDCore20(replaceLocalFilesApplication),
-               ConfigExternarResourcesFrameworkCommon20(replaceLocalFilesApplication),
-               ConfigExternarResourcesTemplatesFrontCoreUiAngular60(replaceLocalFilesApplication),
-               ConfigExternarResourcesFrameworkAngula60Crud(replaceLocalFilesApplication),
-               ConfigExternarResourcesProjectBaseLayoutCoreUIAngular60(replaceLocalFilesApplication),
-               ConfigExternarResourcesProjectBaseLayoutCoreUIAngular60OnlyThisFiles(replaceLocalFilesApplication),
-               ConfigExternarResourcesProjectBaseItensSolutionOnlyThisFiles(replaceLocalFilesApplication),
-               ConfigExternarResourcesProjectCustomLayoutCoreUIAngular80(replaceLocalFilesApplication)
+               GeradorTemplateBack(replaceLocalFilesApplication),
+               GeradorTemplateFront(replaceLocalFilesApplication),
+               GeradorFrameworkBack(replaceLocalFilesApplication),
+               GeradorFrameworkFront(replaceLocalFilesApplication),
+               GeradorProjectAdminFront(replaceLocalFilesApplication),
+               GeradorProjectSiteFront(replaceLocalFilesApplication),
+
+               GeradorProjectAdminFrontThisFiles(replaceLocalFilesApplication),
+               GeradorProjectAllSolutionThisFiles(replaceLocalFilesApplication)
             };
         }
     }
